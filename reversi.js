@@ -2,7 +2,8 @@ const  BOARD_SIZE=8;
 
 const reversi ={
     turn:undefined,
-    message:undefined,
+    result:undefined,
+    pass:undefined,
     white:undefined,
     black:undefined,
     board:new Array(BOARD_SIZE),
@@ -15,7 +16,10 @@ const reversi ={
         this.white.innerText = 2;
         this.black = document.getElementById("black_state");
         this.black.innerText = 2;
-        this.message = document.getElementById("message");
+        this.result = document.getElementById("result");
+        this.result.style.display='none';
+        this.result.style.opacity=0;
+        this.pass = document.getElementById("pass");
         for(let i=0; i<BOARD_SIZE; i++){
             this.board[i] = new Array(BOARD_SIZE)
             let tr = board.children[i]
@@ -114,13 +118,15 @@ const reversi ={
         if(this.showReversible()== 0){
             this._turnChange();
             if(this.showReversible() == 0){
-                this.message.style.display= "block";
-                this.message.innerText = "GAME SET"
-                this.message.setAttribute("onclick", "reversi.message.style.display='none';reversi.init()")
+                this.result.style.display= "block";
+                this.result.style["animation-name"] = "fadein";
+                this.result.children[1].className = this.white.innerText > this.black.innerText ? "white" : 
+                this.white.innerText < this.black.innerText ? "black" : "reversible";
+                tthis.result.children[2].innerText = this.white.innerText == this.black.innerText ? "DRAW" : "WIN"
             }else {
-                this.message.style.display= "block";
-                this.message.innerText = "PASS"
-                this.message.setAttribute("onclick", "reversi.message.style.display='none'")
+                this.pass.style.display = "block";
+                this.pass.style["animation-name"] = "fadein";
+                this.pass.setAttribute("onclick", "reversi.pass.style.display='none';")
             }
         }
     },

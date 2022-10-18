@@ -4,9 +4,9 @@
     repeating-linear-gradient(90deg, #0000 0px, #0000 20px, #0888 20px, #0888 40px);
     display: grid;
     grid-template-columns:350px 100px;
-    grid-template-rows: 120px 120px 120px;
+    grid-template-rows: 2fr 1fr 1fr;
     position: relative;
-    width: 460px;
+    width: 450px;
     border-radius: 5px;
     border: solid;
     border-color: lightseagreen;
@@ -15,8 +15,8 @@
     grid-row-start: 1;
     grid-row-end: 4;
     background-color: #000e;
-    width: 350px;
-    height: 350px;
+    width: 340px;
+    height: 340px;
 }
 
 #board td {
@@ -85,6 +85,7 @@ div{
 }
 
 .black {
+    margin: auto;
     box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, .5),
                 inset 5px 5px 5px 0 rgba(255, 255, 255, .05);
     background-color: black;
@@ -96,6 +97,7 @@ div{
 }
 
 .white {
+    margin: auto;
     box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, .5),
                 inset 5px 5px 5px 0 rgba(255, 255, 255, .05);
     background-color: whitesmoke;
@@ -108,28 +110,58 @@ div{
 
 
 .reversible {
-    background-color: #ff000044;
+    margin: auto;
+    background-color: #ffff0044;
     width: 30px;
     height: 30px;
     border-radius: 50%;
 }
 
 
-#message,#menu{
-    display: none;
-    background-color: #00000088;
-    color: whitesmoke;
+.message{
+    line-height: 0.5;
+    background-color: #8afa;
+    color: white;
     text-align: center;
-    font-size:100px;
+    text-shadow: 2px 2px 2px #aa0a;
+    font-size:64px;
     position:absolute;
     margin :5px;
     left:0px;
     top:0px;
-    width:350px;
-    height:350px;
+    width:340px;
+    height:340px;
+    display: none;
+    opacity: 0;
+    animation-duration: 0.3s;
+    animation-delay: 0.2s;
+    animation-fill-mode:forwards;
 }
 
+@keyframes fadein {
+  0%{
+    opacity: 0%;
+  }
+  100%{
+    opacity: 100%;
+  }
+}
 
+@keyframes fadeout {
+    0%{
+        
+        opacity: 100%;
+      }
+      100%{
+        display: none;
+        opacity: 0%;
+      }
+}
+
+#result p{
+    font-size: 64px;
+    
+}
 
 #state {
     box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, .5);
@@ -156,8 +188,8 @@ button{
     border-color: black;
     background-color: #8afa;
     margin-left: 5px;
+    margin-top: 5px;
     font-size: 20px;
-    height:30%
 }
 
 button:hover{
