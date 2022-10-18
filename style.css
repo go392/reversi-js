@@ -1,0 +1,174 @@
+#game{
+    padding: 5px;
+    background:repeating-linear-gradient(0deg, #0000 0px, #0000 20px, #0888 20px, #0888 40px),
+    repeating-linear-gradient(90deg, #0000 0px, #0000 20px, #0888 20px, #0888 40px);
+    display: grid;
+    grid-template-columns:350px 100px;
+    grid-template-rows: 120px 120px 120px;
+    position: relative;
+    width: 460px;
+    border-radius: 5px;
+    border: solid;
+    border-color: lightseagreen;
+}
+#board {
+    grid-row-start: 1;
+    grid-row-end: 4;
+    background-color: #000e;
+    width: 350px;
+    height: 350px;
+}
+
+#board td {
+    box-shadow: inset 1px 1px 1px 0 rgba(200, 200, 255, .5);
+    width: 30px;
+    height: 30px;
+    background-color: #080e;
+    padding: 5px;
+    border-radius: 2px;
+}
+
+@keyframes put{
+    0%{
+        box-shadow: 5px 5px 3px 0 rgba(0, 0, 0, .5),
+                    inset 5px 5px 5px 0 rgba(255, 255, 255, .05);
+        scale: 150%;
+        opacity: 0%;
+    }
+    100%{
+        box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, .5),
+                    inset 5px 5px 5px 0 rgba(255, 255, 255, .05);
+        scale:100%;
+        opacity:100%;
+    }
+    
+}
+
+@keyframes reverse2black {
+    0%{
+        background-color: whitesmoke;
+        transform:rotate3d(1, 1, 0, 0deg);
+    }
+    50%{
+        background-color: whitesmoke;
+        transform:rotate3d(1, 1, 0, 90deg);
+    }
+    51%{
+        background-color: black;
+    }
+    100%{
+        transform:rotate3d(1, 1, 0, 180deg);
+        scale:100%;
+    }
+}
+
+@keyframes reverse2white {
+    0%{
+        background-color: black;
+        transform:rotate3d(1, 1, 0, 180deg);
+    }
+    50%{
+        background-color: black;
+        transform:rotate3d(1, 1, 0, 90deg);
+    }
+    51%{
+        background-color: whitesmoke;
+    }
+    100%{
+        transform:rotate3d(1, 1, 0, 0deg);
+        scale:100%;
+    }
+}
+
+div{
+    transition-duration: 0.2s;
+}
+
+.black {
+    box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, .5),
+                inset 5px 5px 5px 0 rgba(255, 255, 255, .05);
+    background-color: black;
+    animation-name: put;
+    animation-duration: .5s;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.white {
+    box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, .5),
+                inset 5px 5px 5px 0 rgba(255, 255, 255, .05);
+    background-color: whitesmoke;
+    animation-duration: .5s;
+    animation-name: put;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+
+.reversible {
+    background-color: #ff000044;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+
+#message,#menu{
+    display: none;
+    background-color: #00000088;
+    color: whitesmoke;
+    text-align: center;
+    font-size:100px;
+    position:absolute;
+    margin :5px;
+    left:0px;
+    top:0px;
+    width:350px;
+    height:350px;
+}
+
+
+
+#state {
+    box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, .5);
+    background-color: #8afa;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    border: solid;
+    border-color: black;
+    border-width: 1px;
+    border-radius: 5px;
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    text-align: center;
+    font-size: 20px;
+
+}
+
+button{
+    box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, .5);
+    border: solid;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: black;
+    background-color: #8afa;
+    margin-left: 5px;
+    font-size: 20px;
+    height:30%
+}
+
+button:hover{
+   background-color: #fffa;
+}
+
+button:active{
+    box-shadow: inset 2px 2px 1px 0 rgba(0, 0, 0, .5);
+}
+
+
+.turn {
+    text-align: right;
+}

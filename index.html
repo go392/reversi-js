@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script type='text/javascript' src="reversi.js">
+</script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game">
+        <table id='board'>
+        </table>
+        
+        <div id="state">
+            Turn
+            <div class="turn"><div class="black"></div></div>
+            <div class="black"></div><div id="black_state">2</div>
+            <div class="white"></div><div id="white_state">2</div>
+        </div>
+        <button onclick="reversi.init()">Reset</button>
+        <div id="message"></div>
+        <div id="menu"></div>
+    </div>
+</body>
+</html>
