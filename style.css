@@ -147,16 +147,6 @@ div{
   }
 }
 
-@keyframes fadeout {
-    0%{
-        
-        opacity: 100%;
-      }
-      100%{
-        display: none;
-        opacity: 0%;
-      }
-}
 
 #result p{
     font-size: 64px;
