@@ -120,11 +120,11 @@ const reversi ={
             if(this.showReversible() == 0){
                 this.result.style.display= "block";
                 this.result.style["animation-name"] = "fadein";
-                const black = parseInt(state.num_black.innerText);
-            	const white = parseInt(state.num_white.innerText);
-            	state.result.children[1].className = white > black ? "white" : 
+                const black = parseInt(this.black.innerText);
+            	const white = parseInt(this.white.innerText);
+            	this.result.children[1].className = white > black ? "white" : 
                 	(white < black ? "black" : "reversible");
-            	state.result.children[2].innerText = white == black ? "DRAW" : "WIN"
+            	this.result.children[2].innerText = white == black ? "DRAW" : "WIN"
             }else {
                 this.pass.style.display = "block";
                 this.pass.style["animation-name"] = "fadein";
