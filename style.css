@@ -3,7 +3,7 @@
 
 
 #game{
-    border-radius: 5px;
+    border-radius: 1%;
     border: solid;
     border-color: lightseagreen;
     background:repeating-linear-gradient(0deg, #0000 0px, #0000 20px, #0888 20px, #0888 40px),
@@ -89,10 +89,11 @@
 }
 
 #board td {
-    box-shadow: inset 1px 1px 1px 0 rgba(200, 200, 255, .5);
+    box-shadow: inset 0.5vmin 0.5vmin 2px 0 rgba(255, 255, 200, .5),
+    inset -0.5vmin -0.5vmin 2px 0 rgba(50, 50, 100, .5);
     background-color: #080e;
     padding: 5px;
-    border-radius: 2px;
+    border-radius: 5%;
 }
 
 #board td tr{
@@ -114,12 +115,12 @@
     margin: 1%;
     padding: 1%;
     display: flex;
-    box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, .5);
+    box-shadow: 0.1em 0.1em 2px 0 rgba(0, 0, 0, .5);
     color: white;
-    text-shadow: 2px 2px 2px #000a;
+    text-shadow: 0.1em 0.1em 0.1em #000a;
     background-color: #8afa;
     border: 1px solid #8aff;
-    border-radius: 5px;
+    border-radius: 10%;
     font-size :4vmax;
     text-align: center;
     font-weight: bold;
@@ -144,12 +145,12 @@ button {
     margin: 1vmax;
     padding: 1vmax;
     display: flex;
-    box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, .5);
+    box-shadow: 0.1em 0.1em 2px 0 rgba(0, 0, 0, .5);
     color: white;
-    text-shadow: 2px 2px 2px #000a;
+    text-shadow: 0.1em 0.1em 2px #000a;
     background-color: #8afa;
     border: 2px solid #8aff;
-    border-radius: 5px;
+    border-radius: 10%;
     font-size :4vmax;
     text-align: center;
     transition-duration: 0.5s;
@@ -163,19 +164,19 @@ button:hover{
 }
 
 button:active{
-    box-shadow: inset 2px 2px 1px 0 rgba(0, 0, 0, .5);
+    box-shadow: inset 0.1em 0.1em 2px 0 rgba(0, 0, 0, .5);
 }
 
 @keyframes put{
     0%{
-        box-shadow: 5px 5px 3px 0 rgba(0, 0, 0, .5),
-                    inset 5px 5px 5px 0 rgba(255, 255, 255, .05);
+        box-shadow: 1vmax 1vmax 1vmax 0 rgba(0, 0, 0, .5),
+                    inset 2vmax 2vmax 2vmax 0 rgba(255, 255, 255, .05);
         scale: 150%;
         opacity: 0%;
     }
     100%{
-        box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, .5),
-                    inset 5px 5px 5px 0 rgba(255, 255, 255, .05);
+        box-shadow: 0.25vmax 0.25vmax 2px 0 rgba(0, 0, 0, .5),
+                    inset 2vmax 2vmax 2vmax 0 rgba(255, 255, 255, .05);
         scale:100%;
         opacity:100%;
     }
@@ -185,17 +186,17 @@ button:active{
 @keyframes reverse2black {
     0%{
         background-color: whitesmoke;
-        transform:rotate3d(0, 1, 0, 0deg);
+        transform:rotate3d(1, 1, 0, 0deg);
     }
     50%{
         background-color: whitesmoke;
-        transform:rotate3d(0, 1, 0, 90deg);
+        transform:rotate3d(1, 1, 0, 90deg);
     }
     51%{
         background-color: black;
     }
     100%{
-        transform:rotate3d(0, 1, 0, 180deg);
+        transform:rotate3d(1, 1, 0, 0deg);
         scale:100%;
     }
 }
@@ -203,17 +204,17 @@ button:active{
 @keyframes reverse2white {
     0%{
         background-color: black;
-        transform:rotate3d(0, 1, 0, 180deg);
+        transform:rotate3d(1, 1, 0, 0deg);
     }
     50%{
         background-color: black;
-        transform:rotate3d(0, 1, 0, 90deg);
+        transform:rotate3d(1, 1, 0, 90deg);
     }
     51%{
         background-color: whitesmoke;
     }
     100%{
-        transform:rotate3d(0, 1, 0, 0deg);
+        transform:rotate3d(1, 1, 0, 0deg);
         scale:100%;
     }
 }
@@ -224,8 +225,8 @@ div{
 
 .black {
     margin: auto;
-    box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, .5),
-                inset 5px 5px 5px 0 rgba(255, 255, 255, .05);
+    box-shadow: 0.25vmax 0.25vmax 2px 0 rgba(0, 0, 0, .5),
+                inset 2vmax 2vmax 2vmax 0 rgba(255, 255, 255, .05);
     background-color: black;
     animation-name: put;
     animation-duration: .5s;
@@ -236,8 +237,8 @@ div{
 
 .white {
     margin: auto;
-    box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, .5),
-                inset 5px 5px 5px 0 rgba(255, 255, 255, .05);
+    box-shadow: 0.25vmax 0.25vmax 2px 0 rgba(0, 0, 0, .5),
+                inset 2vmax 2vmax 2vmax 0 rgba(255, 255, 255, .05);
     background-color: whitesmoke;
     animation-duration: .5s;
     animation-name: put;
@@ -279,11 +280,12 @@ div{
 .menu * {
     text-align: center;
     font-size: 6vmin;
+    text-shadow: 0.2vmin 0.2vmin 2px #000a;
 }
 
 .menu h1{
     font-size: 10vmin;
-    text-shadow: 2px 2px 2px #000a;
+    text-shadow: 2vmin 2vmin 2px #000a;
 }
 
 .menu button{
@@ -305,7 +307,7 @@ div{
     width:18vmin;
     height:18vmin;
     border-radius: 50%;
-    box-shadow: 0px 0px 10px 10px #ff8a;
+    box-shadow: 0px 0px 3vmin 3vmin #ff8a;
 }
 
 @keyframes fadein {
