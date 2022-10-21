@@ -11,7 +11,11 @@ const state ={
     pause:false,
     reversibles:[],
     board:new Array(BOARD_SIZE),
-    npc_thinking:null,
+    timeouts:{ 
+        reversing:null,
+        npc_thinking:null,
+        auto_pass_click:null,    
+    }
 };
 
 function bind_state(){
@@ -41,6 +45,7 @@ function init(){
     state.num_white.innerText = 2;
     state.num_black.innerText = 2;
     state.start_menu.style.display='none';
+    state.pass.style.display='none';
     const board = document.getElementById("board");
     for(let i=0; i<BOARD_SIZE; i++){
         state.board[i] = new Array(BOARD_SIZE)
@@ -136,14 +141,21 @@ function updateState() {
 }
 function boardClick(i, j){
     if(state[state.turn.className + "_is_npc"].checked) return;
+    if(state.pause) return;
+    if(state.is_reversing);
     if(state.board[i][j].className != "reversible" && state.board[i][j].className != "none" ) return;
     put(i, j);
 }
 function put(i, j){
     if(reverse( i,j) != 0){
         state.board[i][j].className = state.turn.className ;
+        state.is_reversing=true;
+        const delay = function(){
+            turnChange();
+            state.is_reversing=false;
+        }
         updateState();
-        turnChange();
+        state.timeouts.reversing = setTimeout(delay, 500);
     }
 }
 function turnInit(){
@@ -168,6 +180,13 @@ function turnChange(){
             state.result.children[2].innerText = white == black ? "DRAW" : "WIN"
         }else {
             pass();
+            if(state[(state.turn.className == "black" ? "white" : "black") + "_is_npc"].checked) {
+                const delay= function(){
+                    state.timeouts.auto_pass_click = null;
+                    passClick();
+                }
+                state.timeouts.auto_pass_click = setTimeout(delay, 1000);
+            }
         }
     }
     const wait = function(){
@@ -183,7 +202,7 @@ function turnChange(){
 }
 function npcThinking(){
     if(state.reversibles.length == 0) return;
-    const delay =function(){
+    const delay= function(){
         for(let i=0; i<state.reversibles.length; i++){
             if(state.reversibles[i][0][0] == 0 ||
                 state.reversibles[i][0][0] == BOARD_SIZE-1){
@@ -203,26 +222,28 @@ function npcThinking(){
                 max_pat.push(res[i][0]);
             }
         }
-        console.log(max);
         const index = Math.floor(Math.random()* max_pat.length);
         put(max_pat[index][0], max_pat[index][1]);
+        state.timeouts.npc_thinking= null;
     }
-    state.npc_thinking = setTimeout(delay, 500);
+    state.timeouts.npc_thinking = setTimeout(delay, 250);
 }
 function pass(){
     state.pass.style.display = "block";
     state.pass.style["animation-name"] = "fadein";
     state.pause = true;
 }
-function pass_click(){
+function passClick(){
+    if(state.timeouts.auto_pass_click != null) return;
     state.pause= false;
     state.pass.style.display='none';
 }
 function reset(){
     state.pause = true;
-    if(state.npc_thinking != null){
-        clearTimeout(state.npc_thinking);
-        state.npc_thinking = null;
+    for(let i in state.timeouts){
+        if(state.timeouts[i] != null){
+            clearTimeout(state.timeouts[i]);
+        }
     }
     state.start_menu.style.opacity=0;
     state.start_menu.style.display="block";
