@@ -131,7 +131,9 @@
 }
 
 .state_frame div.black,
-.state_frame div.white{
+.state_frame div.white,
+.state_frame div#white_state,
+.state_frame div#black_state{
     width : 6vmax;
     height :6vmax;
 }
