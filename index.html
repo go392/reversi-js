@@ -8,20 +8,40 @@
 </head>
 <body>
     <div id="game">
-        <table id='board'>
-        </table>
-        
-        <div id="state">
-            Turn
-            <div class="turn"><div class="black"></div></div>
-            <div class="black"></div><div id="black_state">2</div>
-            <div class="white"></div><div id="white_state">2</div>
+        <div class="board_frame">
+            <table id='board'>
+            </table>
+            <div id="start_menu" class="menu">
+                <div>
+                    <h1>REVERSI-JS</h1>
+                    <div>
+                        <label for="black_is_npc">Black NPC</label>
+                        <input name="black_is_npc" type="checkbox" />
+                    </div>
+                    <div>
+                        <label for="white_is_npc">White NPC</label>
+                        <input name="white_is_npc" type="checkbox" />
+                    </div>
+                    <p></p>
+                    <button onclick="init()">Start</button>
+                </div>
+            </div>
+            <div id="pass" class="menu hidden" onclick="pass_click()"><p>&nbsp;</p><h1 style="font-size:12vmin;">PASS</h1></div>
+            <div id="result" class="menu hidden">
+                <h1>GAME SET</h1>
+                <div class="backlight"><div class="black"></div></div>
+                <p>Win</p>
+            </div>
         </div>
-        <button onclick="reversi.init()">Reset</button>
-        <div id="pass" class="message"><p>&nbsp;</p><p>PASS</p></div>
-        <div id="result" class="message"><p>GAME SET</p>
-            <div class="black" style="scale:300%;animation:none;">
-            </div><p>Win</p></div>
+        <div class="state_container">
+            <div class="state_frame">TURN
+                <div id="turn" class="black"></div>
+            </div>
+            <div class = "state_frame">
+                <div class="black"></div><div id="black_state">2</div>
+                <div class="white"></div><div id="white_state">2</div>
+            </div>
+            <button   onclick="reset()">Reset</button>
         </div>
     </div>
 </body>

@@ -1,150 +1,29 @@
 const  BOARD_SIZE=8;
-
-const reversi ={
+const state ={
     turn:undefined,
     result:undefined,
     pass:undefined,
-    white:undefined,
-    black:undefined,
+    num_white:undefined,
+    num_black:undefined,
+    black_is_npc:undefined,
+    white_is_npc:undefined,
+    start_menu:undefined,
+    pause:false,
+    reversibles:[],
     board:new Array(BOARD_SIZE),
+    npc_thinking:null,
+};
 
-    init: function(){
-        const board = document.getElementById("board");
-        this.turn = document.getElementsByClassName("turn")[0].children[0];
-        this.turn.className = "black";
-        this.white = document.getElementById("white_state");
-        this.white.innerText = 2;
-        this.black = document.getElementById("black_state");
-        this.black.innerText = 2;
-        this.result = document.getElementById("result");
-        this.result.style.display='none';
-        this.result.style.opacity=0;
-        this.pass = document.getElementById("pass");
-        for(let i=0; i<BOARD_SIZE; i++){
-            this.board[i] = new Array(BOARD_SIZE)
-            let tr = board.children[i]
-            for(let j=0; j<BOARD_SIZE; j++){
-                let td = tr.children[j];
-                if(td.children.length != 0)td.removeChild(td.lastChild);
-                const div = document.createElement('div');
-                div.setAttribute('onclick', `reversi.boardClick(${i}, ${j})`);
-                td.appendChild(div);
-                this.board[i][j] = div;
-                this.board[i][j].className = "none";
-            }
-        }
-        this.board[3][3].className = "white";
-        this.board[3][4].className = "black";
-        this.board[4][3].className = "black";
-        this.board[4][4].className = "white";
-        this.showReversible();
-    },
-    _checkReversible(i, j, di, dj){
-        let num = 0;
-        let si= i, sj= j;
-        if(this.board[si][sj].className != "none" && this.board[si][sj].className != "reversible") return 0;
-        do{
-            si += di;
-            sj += dj;
-            if(si >= BOARD_SIZE || si < 0) return 0;
-            if(sj >= BOARD_SIZE || sj < 0) return 0;
-            if(this.board[si][sj].className == "none") return 0;
-            if(this.board[si][sj].className == "reversible") return 0;
-            if(this.board[si][sj].className == this.turn.className) return num;
-            num++;
-        }while(true);
-    },
-    _reverse_uncheck(i,j,di,dj){
-        let si= i, sj= j;
-        do{
-            si += di;
-            sj += dj;
-            if(this.board[si][sj].className == this.turn.className)return;
-            this.board[si][sj].className = this.turn.className;
-            this.board[si][sj].style["animation-name"] = "reverse2" + this.turn.className;
-        }while(true);
-    },
-    _reverse(i, j, di, dj) {
-        let ret;
-        if (ret =this._checkReversible(i, j, di, dj) != 0){
-            this._reverse_uncheck(i,j,di,dj);
-        }
-        return ret;
-    },
-    _run8direction(i, j, func){
-        const t = this[func](i, j, -1, 0);
-        const b = this[func](i, j, 1, 0);
-        const l = this[func](i, j, 0, -1);
-        const r = this[func](i, j, 0, 1);
-        const tl = this[func](i, j, -1, -1);
-        const bl = this[func](i, j, 1, -1);
-        const br = this[func](i, j, 1, 1);
-        const tr = this[func](i, j, -1, 1);
-        return t + b + l + r + tl + bl + br + tr;
-    },
-    reverse(i, j){ return this._run8direction(i, j, "_reverse"); },
-    checkReversible(i, j){ return this._run8direction(i, j, "_checkReversible") },
-    showReversible(){
-        let ret =0;
-        for(let i=0; i<BOARD_SIZE; i++){
-            for(let j=0; j<BOARD_SIZE; j++){
-                if(this.checkReversible(i,j) != 0){
-                    ret++;
-                    this.board[i][j].className = "reversible";
-                }else if(this.board[i][j].className == "reversible"){
-                    this.board[i][j].className = "none";
-                }
-            }
-        }
-        return ret;
-    },
-    updateState: function() {
-        let black =0, white =0;
-        for(let i=0; i<BOARD_SIZE; i++){
-            for(let j=0; j<BOARD_SIZE; j++){
-                if(this.board[i][j].className == "black") black++;
-                else if(this.board[i][j].className == "white") white++;
-            }
-        }
-        this.white.innerText = white;
-        this.black.innerText = black;
-    },
-    _turnChange:function(){
-        this.turn.className = this.turn.className == "black" ? "white" : "black";
-        this.turn.style["animation-name"] = "reverse2" + this.turn.className;
-    },
-    turnChange :function(){
-        this._turnChange();
-        if(this.showReversible()== 0){
-            this._turnChange();
-            if(this.showReversible() == 0){
-                this.result.style.display= "block";
-                this.result.style["animation-name"] = "fadein";
-                const black = parseInt(this.black.innerText);
-            	const white = parseInt(this.white.innerText);
-            	this.result.children[1].className = white > black ? "white" : 
-                	(white < black ? "black" : "reversible");
-            	this.result.children[2].innerText = white == black ? "DRAW" : "WIN"
-            }else {
-                this.pass.style.display = "block";
-                this.pass.style["animation-name"] = "fadein";
-                this.pass.setAttribute("onclick", "reversi.pass.style.display='none';")
-            }
-        }
-    },
-    boardClick: function(i, j){
-        if(this.board[i][j].className != "reversible" && this.board[i][j].className != "none" ) return;
-        
-        if(this.reverse(i,j) != 0){
-            this.board[i][j].className = this.turn.className ;
-            this.updateState();
-            this.turnChange();
-        }
-    }
-}
-
-window.onload = function(){
-    let board = document.getElementById("board");
+function bind_state(){
+    state.turn = document.getElementById("turn");
+    state.num_white = document.getElementById("white_state");
+    state.num_black = document.getElementById("black_state");
+    state.black_is_npc = document.getElementsByName("black_is_npc")[0];
+    state.white_is_npc = document.getElementsByName("white_is_npc")[0];
+    state.result = document.getElementById("result");
+    state.start_menu = document.getElementById("start_menu");
+    state.pass = document.getElementById("pass");
+    const board = document.getElementById("board");
     for(let i=0; i<BOARD_SIZE; i++){
         let tr = document.createElement('tr');
         for(let j=0; j<BOARD_SIZE; j++){
@@ -153,5 +32,204 @@ window.onload = function(){
         }
         board.appendChild(tr);
     }
-    reversi.init();
+}
+
+function init(){
+    state.pause = false;
+    state.result.style.display='none';
+    state.result.style.opacity=0;
+    state.num_white.innerText = 2;
+    state.num_black.innerText = 2;
+    state.start_menu.style.display='none';
+    const board = document.getElementById("board");
+    for(let i=0; i<BOARD_SIZE; i++){
+        state.board[i] = new Array(BOARD_SIZE)
+        let tr = board.children[i]
+        for(let j=0; j<BOARD_SIZE; j++){
+            let td = tr.children[j];
+            if(td.children.length != 0)td.removeChild(td.lastChild);
+            const div = document.createElement('div');
+            div.setAttribute('onclick', `boardClick( ${i}, ${j})`);
+            td.appendChild(div);
+            state.board[i][j] = div;
+            state.board[i][j].className = "none";
+        }
+    }
+    state.board[3][3].className = "white";
+    state.board[3][4].className = "black";
+    state.board[4][3].className = "black";
+    state.board[4][4].className = "white";
+    turnInit();
+}
+function _checkReversible( i, j, di, dj){
+    let num = 0;
+    let si= i, sj= j;
+    if(state.board[si][sj].className != "none" && state.board[si][sj].className != "reversible") return 0;
+    do{
+        si += di;
+        sj += dj;
+        if(si >= BOARD_SIZE || si < 0) return 0;
+        if(sj >= BOARD_SIZE || sj < 0) return 0;
+        if(state.board[si][sj].className == "none") return 0;
+        if(state.board[si][sj].className == "reversible") return 0;
+        if(state.board[si][sj].className == state.turn.className) return num;
+        num++;
+    }while(true);
+}
+function _reverse_uncheck( i,j,di,dj){
+    let si= i, sj= j;
+    do{
+        si += di;
+        sj += dj;
+        if(state.board[si][sj].className == state.turn.className)return;
+        state.board[si][sj].className = state.turn.className;
+        state.board[si][sj].style["animation-name"] = "reverse2" + state.turn.className;
+    }while(true);
+}
+function _reverse(i, j, di, dj) {
+    let ret;
+    if (ret =_checkReversible(i, j, di, dj) != 0){
+        _reverse_uncheck( i,j,di,dj);
+    }
+    return ret;
+}
+function _run8direction( i, j, func){
+        const t = func( i, j, -1, 0);
+        const b = func( i, j, 1, 0);
+        const l = func( i, j, 0, -1);
+        const r = func( i, j, 0, 1);
+        const tl = func( i, j, -1, -1);
+        const bl = func( i, j, 1, -1);
+        const br = func( i, j, 1, 1);
+        const tr = func( i, j, -1, 1);
+        return t + b + l + r + tl + bl + br + tr;
+    }
+function reverse( i, j){ return _run8direction( i, j, _reverse); }
+function checkReversible( i, j){ return _run8direction(i, j, _checkReversible);}
+function showReversible(){
+    state.reversibles=[];
+    let ret =0;
+    for(let i=0; i<BOARD_SIZE; i++){
+        for(let j=0; j<BOARD_SIZE; j++){
+            let c;
+            if((c = checkReversible( i,j)) != 0){
+                ret++;
+                state.reversibles.push([[i, j], c]);
+                state.board[i][j].className = "reversible";
+            }else if(state.board[i][j].className == "reversible"){
+                state.board[i][j].className = "none";
+            }
+        }
+    }
+    return ret;
+}
+function updateState() {
+    let black =0, white =0;
+    for(let i=0; i<BOARD_SIZE; i++){
+        for(let j=0; j<BOARD_SIZE; j++){
+            if(state.board[i][j].className == "black") black++;
+            else if(state.board[i][j].className == "white") white++;
+        }
+    }
+    state.num_white.innerText = white;
+    state.num_black.innerText = black;
+}
+function boardClick(i, j){
+    if(state[state.turn.className + "_is_npc"].checked) return;
+    if(state.board[i][j].className != "reversible" && state.board[i][j].className != "none" ) return;
+    put(i, j);
+}
+function put(i, j){
+    if(reverse( i,j) != 0){
+        state.board[i][j].className = state.turn.className ;
+        updateState();
+        turnChange();
+    }
+}
+function turnInit(){
+    state.turn.className ="";
+    turnChange();
+}
+function _turnChange(){
+    state.turn.className = state.turn.className == "black" ? "white" : "black";
+    state.turn.style["animation-name"] = "reverse2" + state.turn.className;
+}
+function turnChange(){
+    _turnChange();
+    if(showReversible()== 0){
+        _turnChange();
+        if(showReversible() == 0){
+            state.result.style.display= "block";
+            state.result.style["animation-name"] = "fadein";
+            const black = parseInt(state.num_black.innerText);
+            const white = parseInt(state.num_white.innerText);
+            state.result.children[1].children[0].className = white > black ? "white" : 
+                (white < black ? "black" : "reversible");
+            state.result.children[2].innerText = white == black ? "DRAW" : "WIN"
+        }else {
+            pass();
+        }
+    }
+    const wait = function(){
+        if(state.pause){
+            setTimeout(wait, 100);
+        }else {
+            if(state[state.turn.className + "_is_npc"].checked){
+                npcThinking();
+            }
+        }
+    }
+    wait();
+}
+function npcThinking(){
+    if(state.reversibles.length == 0) return;
+    const delay =function(){
+        for(let i=0; i<state.reversibles.length; i++){
+            if(state.reversibles[i][0][0] == 0 ||
+                state.reversibles[i][0][0] == BOARD_SIZE-1){
+                if(state.reversibles[i][0][1] == 0 ||
+                    state.reversibles[i][0][1] == BOARD_SIZE-1){
+                        state.reversibles[i][1] *= 10;
+                    }
+            }
+        }
+        const res = state.reversibles.sort((a,b) =>{
+            return a[1] < b[1] ? 1 : -1;
+        })
+        const max = res[0][1];
+        const max_pat = [];
+        for(let i=0; i<res.length; i++){
+            if(max == res[i][1]) {
+                max_pat.push(res[i][0]);
+            }
+        }
+        console.log(max);
+        const index = Math.floor(Math.random()* max_pat.length);
+        put(max_pat[index][0], max_pat[index][1]);
+    }
+    state.npc_thinking = setTimeout(delay, 500);
+}
+function pass(){
+    state.pass.style.display = "block";
+    state.pass.style["animation-name"] = "fadein";
+    state.pause = true;
+}
+function pass_click(){
+    state.pause= false;
+    state.pass.style.display='none';
+}
+function reset(){
+    state.pause = true;
+    if(state.npc_thinking != null){
+        clearTimeout(state.npc_thinking);
+        state.npc_thinking = null;
+    }
+    state.start_menu.style.opacity=0;
+    state.start_menu.style.display="block";
+    state.start_menu.style["animation-name"] = "fadein";
+    state.result.style.display="none";
+}
+
+window.onload = function(){
+    bind_state();
 }
