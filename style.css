@@ -14,6 +14,7 @@
 @media  (orientation:landscape){
     #game{
         max-height: 96vh;
+        max-width: 150vh;
         display: flex;
         justify-content:center;
     }
@@ -24,7 +25,7 @@
     }
 
     .state_container{
-        width: 30%;
+        width: 40%;
     }
 
     .state_frame{
@@ -40,6 +41,7 @@
 @media (orientation:portrait) {
     #game{
         display: block;
+        max-height: 150vw;
     }
 
     .board_frame{
@@ -60,7 +62,6 @@
     }
 
     .state_container button{
-        
         min-width: 40%;
         max-width: 90%;
         width: 40vh;
@@ -92,7 +93,7 @@
     box-shadow: inset 0.5vmin 0.5vmin 2px 0 rgba(255, 255, 200, .5),
     inset -0.5vmin -0.5vmin 2px 0 rgba(50, 50, 100, .5);
     background-color: #080e;
-    padding: 5px;
+    padding: 1%;
     border-radius: 5%;
 }
 
@@ -107,13 +108,13 @@
 }
 
 .state_container{
-    padding :5px;
+    padding :1vmin;
     max-width: 100%;
 }
 
 .state_frame{
-    margin: 1%;
-    padding: 1%;
+    margin: 1vmin;
+    padding: 1vmin;
     display: flex;
     box-shadow: 0.1em 0.1em 2px 0 rgba(0, 0, 0, .5);
     color: white;
@@ -121,7 +122,7 @@
     background-color: #8afa;
     border: 1px solid #8aff;
     border-radius: 10%;
-    font-size :4vmax;
+    font-size :6vmin;
     text-align: center;
     font-weight: bold;
 }
@@ -134,8 +135,8 @@
 .state_frame div.white,
 .state_frame div#white_state,
 .state_frame div#black_state{
-    width : 6vmax;
-    height :6vmax;
+    width : 8vmin;
+    height :8vmin;
 }
 
 .state {
@@ -144,16 +145,15 @@
 }
 
 button {
-    margin: 1vmax;
-    padding: 1vmax;
-    display: flex;
+    margin: 1vmin;
+    padding: 1vmin;
     box-shadow: 0.1em 0.1em 2px 0 rgba(0, 0, 0, .5);
     color: white;
     text-shadow: 0.1em 0.1em 2px #000a;
     background-color: #8afa;
     border: 2px solid #8aff;
     border-radius: 10%;
-    font-size :4vmax;
+    font-size :6vmin;
     text-align: center;
     transition-duration: 0.5s;
     font-weight: bold;
