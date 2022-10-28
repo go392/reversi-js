@@ -29,7 +29,7 @@
     }
 
     .state_frame{
-        max-width: 96%;
+        max-width: 100%;
     }
 
     .state_container button{
@@ -45,7 +45,7 @@
     }
 
     .board_frame{
-        width: 100%;
+        width: 96%;
     }
 
     .state_container{
