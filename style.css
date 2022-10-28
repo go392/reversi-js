@@ -42,10 +42,11 @@
     #game{
         display: block;
         max-height: 150vw;
+	max-width: 96%;
     }
 
     .board_frame{
-        width: 96%;
+        width: 100%;
     }
 
     .state_container{
